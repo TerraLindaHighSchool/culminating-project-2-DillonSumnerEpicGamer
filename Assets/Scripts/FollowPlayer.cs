@@ -6,6 +6,7 @@ public class FollowPlayer : MonoBehaviour
 {
     //public variables
     public GameObject player;
+    public GameObject player_weapon;
     //private variables
     [SerializeField] private Vector3 cameraOffset = new Vector3(0, 7, -10);
 
@@ -13,6 +14,6 @@ public class FollowPlayer : MonoBehaviour
     void LateUpdate()
     {
         //move camera to player + offset
-        transform.position = player.transform.position + cameraOffset; 
+        transform.position = player.transform.position + cameraOffset;
     }
 }

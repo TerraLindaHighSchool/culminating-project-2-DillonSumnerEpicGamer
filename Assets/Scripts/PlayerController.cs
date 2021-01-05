@@ -1,28 +1,22 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
 
 public class PlayerController : MonoBehaviour
 {
     //private variables
-    [SerializeField] private float speed;
-    [SerializeField] private float horsePower = 100000.0f;
-    [SerializeField] private float RPM;
-    private float turnSpeed = 15.0f;
-    private float horizontalInput;
+    [SerializeField] private float speed = 10.0f;
+    private float speedLeft;
+    [SerializeField] private float turnSpeed = 15.0f;
+    private float nonDriftSpeed;
+    private float driftSpeed = 250.0f;
+    [SerializeField] private float horizontalInput;
     private float verticalInput;
-    private Rigidbody rb;
-    [SerializeField] private GameObject centerOfMass;
-    [SerializeField] private TextMeshProUGUI speedometerText;
-    [SerializeField] private TextMeshProUGUI RPMText;
-    [SerializeField] private List<WheelCollider> allWheels;
-    [SerializeField] int wheelsOnGround;
 
     private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        rb.centerOfMass = centerOfMass.transform.position;
+        nonDriftSpeed = turnSpeed;
+        speedLeft = speed;
     }
 
     // Update is called once per frame
@@ -31,39 +25,20 @@ public class PlayerController : MonoBehaviour
         //getting input
         horizontalInput = Input.GetAxis("Horizontal");
         verticalInput = Input.GetAxis("Vertical");
-        if (IsOnGround())
+
+        //move foreward
+        
+        if (Input.GetKey(KeyCode.Space) && speedLeft > 0)
         {
-            rb.AddRelativeForce(Vector3.forward * horsePower * verticalInput);
-
-            //move foreward
-            //transform.Translate(Vector3.forward * Time.deltaTime * speed * verticalInput);
-            transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput);
-
-            speed = Mathf.RoundToInt(rb.velocity.magnitude * 2.237f);
-            speedometerText.SetText("Speed: " + speed + "mph");
-
-            RPM = (speed % 30) * 40;
-            RPMText.SetText("RPM: " + RPM);
-        }
-    }
-
-    bool IsOnGround()
-    {
-        wheelsOnGround = 0;
-        foreach (WheelCollider wheel in allWheels)
-        {
-            if (wheel.isGrounded)
-            {
-                wheelsOnGround++;
-            }
-        }
-        if (wheelsOnGround == allWheels.Count)
-        {
-            return true;   
+            turnSpeed = driftSpeed;
+            speedLeft--;
         }
         else
         {
-            return false;
+            speedLeft = speed;
+            turnSpeed = nonDriftSpeed;
         }
+        transform.Translate(Vector3.forward * Time.deltaTime * speedLeft * verticalInput);
+        transform.Rotate(Vector3.up, Time.deltaTime * turnSpeed * horizontalInput);
     }
 }
