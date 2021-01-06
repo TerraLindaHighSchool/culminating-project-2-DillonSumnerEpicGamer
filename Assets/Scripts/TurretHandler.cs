@@ -5,6 +5,9 @@ using UnityEngine;
 public class TurretHandler : MonoBehaviour
 {
     public Camera mainCamera;
+    public GameObject[] projectilePrefabs;
+
+    private int projectile;
 
     // Start is called before the first frame update
     void Start()
@@ -17,6 +20,8 @@ public class TurretHandler : MonoBehaviour
     {
         //This here code is not made by me, but was made by iKabyLake30, I think I understand it maybe now.
         //https://answers.unity.com/questions/1699631/player-rotating-towards-mouse-3d.html
+        //This is what I thought of doing, but I didn't know how to do it lol
+
         Ray cameraRay = mainCamera.ScreenPointToRay(Input.mousePosition);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);
         float rayLength;
@@ -30,7 +35,13 @@ public class TurretHandler : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("Player is trying to shoot but cannot shoot because it is unimplemented");
+            ShootProjectile();
         }
+    }
+    void ShootProjectile()
+    {
+        //This function is what the name describes it to be, It shoots the projectile
+        //But this function ALSO will change each projectile just because why not.
+        Instantiate(projectilePrefabs[projectile],transform.position,transform.rotation);
     }
 }

@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float horizontalInput;
     private float verticalInput;
 
+    private int playerHealth = 100;
+
     private void Start()
     {
         nonDriftSpeed = turnSpeed;
