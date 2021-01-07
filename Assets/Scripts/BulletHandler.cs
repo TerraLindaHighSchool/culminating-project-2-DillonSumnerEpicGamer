@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class BulletHandler : MonoBehaviour
 {
-    private Rigidbody rb;
     public ParticleSystem explosionParticle;
+
+    private bool isExploded = false;
 
     [SerializeField]private float speed = 50f;
 
@@ -15,6 +16,18 @@ public class BulletHandler : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
+        if (transform.position.y < -200)
+        {
+            DestroyThis();
+        }
+    }
+
+    void Explode()
+    {
+        isExploded = true;
+        explosionParticle.Play();
+        Invoke("DestroyThis", 1);
+        Debug.Log("Hit Ground");
     }
 
     void DestroyThis()
@@ -22,12 +35,11 @@ public class BulletHandler : MonoBehaviour
         Destroy(this.gameObject);
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-      if (collision.gameObject.CompareTag("Ground"))
+        if (other.gameObject.CompareTag("Ground") && !isExploded)
         {
-            explosionParticle.Play();
-            Debug.Log("Hit Ground");
+            Explode();
         }
     }
 

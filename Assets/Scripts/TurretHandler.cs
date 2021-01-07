@@ -7,7 +7,7 @@ public class TurretHandler : MonoBehaviour
     public Camera mainCamera;
     public GameObject[] projectilePrefabs;
 
-    private int projectile;
+    private int projectile = 0;
 
     // Start is called before the first frame update
     void Start()
