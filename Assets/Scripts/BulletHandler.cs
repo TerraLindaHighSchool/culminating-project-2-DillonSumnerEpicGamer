@@ -6,6 +6,8 @@ public class BulletHandler : MonoBehaviour
 {
     public ParticleSystem explosionParticle;
 
+    public int damage;
+
     private bool isExploded = false;
 
     [SerializeField]private float speed = 50f;
@@ -27,7 +29,6 @@ public class BulletHandler : MonoBehaviour
         isExploded = true;
         explosionParticle.Play();
         Invoke("DestroyThis", 1);
-        Debug.Log("Hit Ground");
     }
 
     void DestroyThis()
@@ -41,6 +42,11 @@ public class BulletHandler : MonoBehaviour
         {
             Explode();
         }
+        else if (other.gameObject.CompareTag("Enemy"))
+        {
+            other.gameObject.GetComponent<EnemyHandler>().damageEnemy(damage);
+        }
+        
     }
 
 }

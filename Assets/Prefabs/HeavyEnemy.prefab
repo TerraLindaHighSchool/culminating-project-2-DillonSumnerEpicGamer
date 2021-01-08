@@ -735,6 +735,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerSpawn: {fileID: 0}
+  player: {fileID: 0}
   healthShowingThing: {fileID: 5530147342240303425}
   typeNPC: 1
   health: 100

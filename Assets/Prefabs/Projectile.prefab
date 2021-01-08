@@ -146,6 +146,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   explosionParticle: {fileID: 2703642048799530156}
+  damage: 10
   speed: 50
 --- !u!1001 &2703642048819310252
 PrefabInstance:

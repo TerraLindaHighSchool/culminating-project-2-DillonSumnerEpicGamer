@@ -12,29 +12,31 @@ public class EnemyHandler : MonoBehaviour
     [Range(0, 100)]
     [SerializeField] private int health = 100;
 
-    private bool hasSeenPlayer = false;
-    private bool isAttackingSpawn = false;
     private bool isDead = false;
-
+    private bool hasDamaged = false;
+    private bool isAttacking = false;
     
-    private int damage;
+    public int damage;
+    private float speed;
 
     // Start is called before the first frame update
     void Start()
     {
+        playerSpawn = GameObject.Find("SpawnCube");
+
         switch (typeNPC)
         {
             //tank
-            case 1: damage = 10;
+            case 1: damage = 10; speed = 5;
                 break;
             //heal
-            case 2: damage = 1;
+            case 2: damage = 1; speed = 10;
                 break;
             //speed
-            case 3: damage = 5;
+            case 3: damage = 5; speed = 15;
                 break;
             //useless
-            default: damage = 0;
+            default: damage = 0; speed = 0;
                 break;
         }
     }
@@ -49,33 +51,58 @@ public class EnemyHandler : MonoBehaviour
 
         if (Physics.Raycast(transform.position + rayStartPos, transform.TransformDirection(Vector3.forward), out hit, sightRange))
         {
-           Debug.DrawRay(transform.position + rayStartPos, transform.TransformDirection(Vector3.forward) * sightRange, Color.yellow);
-            transform.Rotate(0, Random.Range(-45,45), 0, Space.Self);
-            if (hit.transform.CompareTag("EditorOnly"))
+            Debug.DrawRay(transform.position + rayStartPos, transform.TransformDirection(Vector3.forward) * sightRange, Color.yellow);
+
+            if (hit.transform.CompareTag("Spawn") && !hasDamaged)
             {
-                Debug.Log(hit.transform.name);
+                hasDamaged = true;
+                isAttacking = true;
+                hit.transform.GetComponent<SpawnThingHandler>().TakeDamage(damage);
             }
+            else
+            {
+                if (!isAttacking)
+                {
+                    transform.Rotate(0, Random.Range(-45, 45), 0, Space.Self);
+                }
+
+                if (Random.Range(1,500) == 100)
+                {
+                    hasDamaged = false;
+                }
+            }
+           
         }
         else
         {
-           Debug.DrawRay(transform.position + rayStartPos, transform.TransformDirection(Vector3.forward) * sightRange, Color.white);
-           if (!isAttackingSpawn)
-           {
-                moveToSpawn();
-           }
+            Debug.DrawRay(transform.position + rayStartPos, transform.TransformDirection(Vector3.forward) * sightRange, Color.white);
+            Move(playerSpawn);
+           
         }
 
         checkHealth();
+
+        if (isDead)
+        {
+            Destroy(this.gameObject);
+        }
     }
 
-    void moveToPlayer()
+    public void damageEnemy(int dmg)
     {
-
+        health = health - dmg;
     }
 
-    void moveToSpawn()
+    void Move(GameObject thing)
     {
+        float singleStep = Time.deltaTime * speed;
+        Vector3 look = (playerSpawn.transform.position - transform.position);
+        Vector3 lookVector = look.normalized;
+        look.y = 0;
+        var rotation = Quaternion.LookRotation(look);
+        transform.rotation = Quaternion.Slerp(transform.rotation, rotation, singleStep);
 
+        transform.Translate(transform.right * singleStep);
     }
 
     void checkHealth()

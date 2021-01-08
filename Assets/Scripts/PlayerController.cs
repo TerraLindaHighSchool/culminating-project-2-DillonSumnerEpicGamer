@@ -8,12 +8,11 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 10.0f;
     private float speedLeft;
     [SerializeField] private float turnSpeed = 15.0f;
+    private bool driftEnabled = true;
     private float nonDriftSpeed;
     private float driftSpeed = 250.0f;
     [SerializeField] private float horizontalInput;
     private float verticalInput;
-
-    private int playerHealth = 100;
 
     private void Start()
     {
@@ -30,7 +29,7 @@ public class PlayerController : MonoBehaviour
 
         //move foreward
         
-        if (Input.GetKey(KeyCode.Space) && speedLeft > 0)
+        if (Input.GetKey(KeyCode.Space) && speedLeft > 0 && driftEnabled)
         {
             turnSpeed = driftSpeed;
             speedLeft--;
