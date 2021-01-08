@@ -7,6 +7,7 @@ public class SpawnThingHandler : MonoBehaviour
     public GameObject healthOBJ;
     private bool gameOver = false;
 
+    [Range(0, 100000)]
     [SerializeField] private int health = 1000;
 
     // Start is called before the first frame update
@@ -24,6 +25,11 @@ public class SpawnThingHandler : MonoBehaviour
     public void TakeDamage(int dmg)
     {
         health = health - dmg;
+    }
+
+    public void AddHealth(int add)
+    {
+        health = health + add;
     }
 
     void checkHealth()
