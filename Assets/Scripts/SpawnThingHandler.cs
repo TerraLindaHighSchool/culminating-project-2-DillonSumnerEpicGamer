@@ -5,7 +5,9 @@ using UnityEngine;
 public class SpawnThingHandler : MonoBehaviour
 {
     public GameObject healthOBJ;
-    private bool gameOver = false;
+    public GameObject GameOverScreen;
+    public GameObject bg;
+    public bool gameOver = false;
 
     [Range(0, 100000)]
     [SerializeField] private int health = 1000;
@@ -19,7 +21,10 @@ public class SpawnThingHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        checkHealth();
+        if (!gameOver)
+        {
+            checkHealth();
+        }
     }
 
     public void TakeDamage(int dmg)
@@ -60,8 +65,9 @@ public class SpawnThingHandler : MonoBehaviour
             {
                 Destroy(power[i]);
             }
+            GameOverScreen.SetActive(true);
+            bg.SetActive(true);
             gameOver = true;
-            Debug.LogError("GAME OVER");
         }
     }
 }

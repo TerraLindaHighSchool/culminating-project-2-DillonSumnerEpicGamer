@@ -9,21 +9,21 @@ public class SpawnHandler : MonoBehaviour
     public GameObject[] powerUpPrefabs;
     public TextMeshProUGUI ememiesLeftText;
 
+    public int Difficulty;
+
     private int enemyCount;
     private int currentLevel = 1;
     private bool skipLevel = false;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        currentLevel = 1;
-        NewWave(currentLevel);
-    }
 
     // Update is called once per frame
     void Update()
     {
         enemyCount = FindObjectsOfType<EnemyHandler>().Length;
+        if (GameObject.Find("SpawnCube").GetComponent<SpawnThingHandler>().gameOver || Difficulty == 0)
+        {
+            enemyCount = 1;
+        }
         ememiesLeftText.text = "Enemies Left: " + enemyCount;
         if (enemyCount == 0 || skipLevel)
         {
@@ -34,6 +34,7 @@ public class SpawnHandler : MonoBehaviour
 
     void NewWave(int waveCount)
     {
+        waveCount = waveCount * Difficulty;
         for (int i = 0; i < waveCount; i++)
         {
             GameObject enemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];

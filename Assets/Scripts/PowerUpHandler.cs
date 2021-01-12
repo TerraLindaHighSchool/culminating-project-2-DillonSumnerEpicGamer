@@ -20,12 +20,11 @@ public class PowerUpHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("owo");
         switch (powerupType)
         {
             case 1: spawn.GetComponent<SpawnThingHandler>().AddHealth(HealthPotAdd); break;
