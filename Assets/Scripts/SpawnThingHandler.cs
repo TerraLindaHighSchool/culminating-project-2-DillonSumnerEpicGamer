@@ -50,6 +50,16 @@ public class SpawnThingHandler : MonoBehaviour
         else
         {
             healthColour.color = Color.black;
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            for (int i = 0; i < enemies.Length; i++)
+            {
+                Destroy(enemies[i]);
+            }
+            GameObject[] power = GameObject.FindGameObjectsWithTag("Powerup");
+            for (int i = 0; i < power.Length; i++)
+            {
+                Destroy(power[i]);
+            }
             gameOver = true;
             Debug.LogError("GAME OVER");
         }

@@ -36,17 +36,19 @@ public class SpawnHandler : MonoBehaviour
     {
         for (int i = 0; i < waveCount; i++)
         {
-            Debug.Log("New Enemy Spawn");
-            Debug.Log("New Powerup Spawn");
+            GameObject enemy = enemyPrefabs[Random.Range(0, enemyPrefabs.Length)];
+            Instantiate(enemy,GenerateSpawn(10, 0),enemy.transform.rotation);
+            GameObject powerup = powerUpPrefabs[Random.Range(0, powerUpPrefabs.Length)];
+            Instantiate(powerup, GenerateSpawn(10, powerup.GetComponent<BoxCollider>().size.y/2 + 1f), powerup.transform.rotation);
         }
     }
 
-    Vector3 GenerateSpawn(float range)
+    Vector3 GenerateSpawn(float range, float y)
     {
         float spawnX = Random.Range(-range, range);
         float spawnZ = Random.Range(-range, range);
 
-        Vector3 spawnPos = new Vector3(spawnX, 0, spawnZ);
+        Vector3 spawnPos = new Vector3(spawnX, y, spawnZ);
         return spawnPos;
     }
 }
