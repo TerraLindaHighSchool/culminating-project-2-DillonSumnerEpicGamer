@@ -14169,6 +14169,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyPrefabs:
   - {fileID: 7421448023814758036, guid: 073c38b588a75e447a999275f972f513, type: 3}
+  - {fileID: 2386718013689295779, guid: 4a9ea0e22c2c06f448e54c550d0d3f53, type: 3}
   powerUpPrefabs:
   - {fileID: 2049927924172025078, guid: b6c6a0a08ff0d274fa3b19a0227d423a, type: 3}
   ememiesLeftText: {fileID: 929006002}
@@ -15499,6 +15500,10 @@ PrefabInstance:
       propertyPath: m_TagString
       value: EditorOnly
       objectReference: {fileID: 0}
+    - target: {fileID: 134104, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 456524, guid: 71782582b9d2cac4cba5251a3b767d13, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -15957,7 +15962,7 @@ MonoBehaviour:
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 3
+          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -21489,6 +21494,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_TagString
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7249244665145797053, guid: 96f3d7c600e95ad44b3137fb4bbc5fd0,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7249244665145798781, guid: 96f3d7c600e95ad44b3137fb4bbc5fd0,
         type: 3}
